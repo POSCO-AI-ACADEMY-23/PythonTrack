@@ -1,2 +1,0 @@
-# PythonTrack
-Personal Study
