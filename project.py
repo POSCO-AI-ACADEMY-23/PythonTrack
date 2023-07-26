@@ -1,24 +1,31 @@
-with open('./students.txt', 'r') as f:
-    
+with open('students.txt', 'r') as f:
+
     def line():
-        a = '    Student            Name   Midterm   Final   Average   Grade'
-        print(a)
-        print('-'*65)
+        a = 'Student        Name   Midterm   Final   Average   Grade'
+        print(a)                            # 출력
+        print('-'*62)                       # - 62개 추가
         
     def print_(x):
         for i in range(len(x)):
-            print("{:>10} {:>16} {:>6} {:>8} {:>10} {:>6}".format(*x[i]))        
-        
-    def to_str(x):
-        for i in range(len(x)):
-            x[i][2] = str(x[i][2])
-            x[i][3] = str(x[i][3])
-            
-    def grade(x):
-        for i in range(len(x)):
-            if x[i][4] >= 90:
-                x[i].append('A')
-            elif x[i][4] >= 80:
+            print("{:>0} {:>12} {:>5} {:>7} {:>10} {:>6}".format(*x[i]))  # format(x[i][0],x[i][1],x[i][2],x[i][3],x[i][4]),x[i][5]) 
+                   #학번  이름   중간  기말   평균  등급
+    '''def to_str(x):
+        for i in range(len(x)):             # x리스트 5개 i에 저장
+            x[i][2] = str(x[i][2])          # x리스트의 각 2번째(중간), 3번째(기말)를 문자열로 변환
+            x[i][3] = str(x[i][3])'''
+     
+    def readstudent(x):
+        f1 = f.readlines()
+        list = [i for i in f1]
+        list = [list[i].strip().split('\t') for i in range(len(list))]
+
+        for i in range(len(list)):
+            list[i].append((float(s[i][2])+float(s[i][3]))/2)        
+    
+        for i in range(len(x)):             # x리스트 5개 i에 저장
+            if x[i][4] >= 90:               # x리스트를 돌면서 4번째(평균) > 90이상이면
+                x[i].append('A')            # x리스트에 'A'추가
+            elif x[i][4] >= 80: 
                 x[i].append('B')
             elif x[i][4] >= 70:
                 x[i].append('C')
@@ -26,14 +33,7 @@ with open('./students.txt', 'r') as f:
                 x[i].append('D')
             else:
                 x[i].append('F')
-        to_str(x)
-                
-    def readstudent(x):
-        s = [i for i in f]
-        s = [s[i].strip().split('\t') for i in range(len(s))]
-        for i in range(len(s)):
-            s[i].append((float(s[i][2])+float(s[i][3]))/2)        
-        grade(s)
+
         s.sort(key = lambda e : float(e[4]), reverse = True)
         return s
     
@@ -84,8 +84,7 @@ with open('./students.txt', 'r') as f:
             x[v1][5] = 'F'
         print('Score changed.')
         x.sort(key = lambda e : float(e[4]), reverse = True)
-        to_str(x)
-
+        #to_str(x)
 
     def add(x):
         stid = input('Student ID: ')
@@ -111,7 +110,7 @@ with open('./students.txt', 'r') as f:
             l.append('F')
         x.append(l)
         x.sort(key = lambda e : float(e[4]), reverse = True)
-        to_str(x)
+        #to_str(x)
         if len(l) == 6:
             print('Student added.')
     
